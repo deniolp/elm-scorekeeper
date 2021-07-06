@@ -5,14 +5,22 @@ import Html
 
 
 main =
-    Html.text (toString result)
+    let
+        name =
+            "Denis Popov"
+
+        length =
+            String.length name
+    in
+    capitalize 10 name
+        ++ " -- name length: "
+        ++ toString length
+        |> Html.text
 
 
-add a b =
-    a + b
+capitalize maxLength name =
+    if String.length name > maxLength then
+        String.toUpper name
 
-
-result =
-    --add (add 1 7) 6
-    --add 1 7 |> add 6
-    add 1 7 |> (\a -> remainderBy 2 a == 0)
+    else
+        name
