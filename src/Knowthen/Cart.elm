@@ -1,13 +1,23 @@
 module Knowthen.Cart exposing (..)
 
 import Debug exposing (toString)
-import Html
+import Html exposing (Html)
 
 
+main : Html msg
 main =
     Html.text (toString newCart)
 
 
+type alias Item =
+    { name : String
+    , price : Float
+    , qty : Int
+    , discounted : Bool
+    }
+
+
+cart : List Item
 cart =
     [ { name = "Lemon", price = 0.5, qty = 1, discounted = False }
     , { name = "Apple", price = 1.0, qty = 5, discounted = False }
@@ -27,6 +37,7 @@ cart =
 --        item
 
 
+discount : Int -> Float -> Item -> Item
 discount minQty dscPct item =
     if item.qty >= minQty && not item.discounted then
         { item
@@ -43,5 +54,6 @@ discount minQty dscPct item =
 --    List.map fiveOrMoreDiscount cart
 
 
+newCart : List Item
 newCart =
     List.map (discount 10 0.3 >> discount 5 0.2) cart
