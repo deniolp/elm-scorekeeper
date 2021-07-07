@@ -1,4 +1,4 @@
-module Exercise1 exposing (..)
+module Exercises.Exercise1 exposing (..)
 
 import Debug exposing (toString)
 import Html exposing (text)
