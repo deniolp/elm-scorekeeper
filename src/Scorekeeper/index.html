@@ -5303,14 +5303,11 @@ var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$p = _VirtualDom_node('p');
-var $author$project$Scorekeeper$Main$Cancel = {$: 'Cancel'};
-var $author$project$Scorekeeper$Main$Input = function (a) {
-	return {$: 'Input', a: a};
+var $author$project$Scorekeeper$Main$DeletePlay = function (a) {
+	return {$: 'DeletePlay', a: a};
 };
-var $author$project$Scorekeeper$Main$Save = {$: 'Save'};
-var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$html$Html$form = _VirtualDom_node('form');
-var $elm$html$Html$input = _VirtualDom_node('input');
+var $elm$html$Html$i = _VirtualDom_node('i');
+var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5328,6 +5325,87 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $elm$core$Debug$toString = _Debug_toString;
+var $author$project$Scorekeeper$Main$playRow = function (play) {
+	return A2(
+		$elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$i,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('remove'),
+						$elm$html$Html$Events$onClick(
+						$author$project$Scorekeeper$Main$DeletePlay(play))
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(play.name)
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$elm$core$Debug$toString(play.points))
+					]))
+			]));
+};
+var $elm$html$Html$ul = _VirtualDom_node('ul');
+var $author$project$Scorekeeper$Main$playList = function (model) {
+	return A2(
+		$elm$html$Html$ul,
+		_List_Nil,
+		A2($elm$core$List$map, $author$project$Scorekeeper$Main$playRow, model.plays));
+};
+var $elm$html$Html$header = _VirtualDom_node('header');
+var $author$project$Scorekeeper$Main$playListHeader = A2(
+	$elm$html$Html$header,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Plays')
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Points')
+				]))
+		]));
+var $author$project$Scorekeeper$Main$playSection = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$author$project$Scorekeeper$Main$playListHeader,
+				$author$project$Scorekeeper$Main$playList(model)
+			]));
+};
+var $author$project$Scorekeeper$Main$Cancel = {$: 'Cancel'};
+var $author$project$Scorekeeper$Main$Input = function (a) {
+	return {$: 'Input', a: a};
+};
+var $author$project$Scorekeeper$Main$Save = {$: 'Save'};
+var $elm$html$Html$button = _VirtualDom_node('button');
+var $elm$html$Html$form = _VirtualDom_node('form');
+var $elm$html$Html$input = _VirtualDom_node('input');
 var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
@@ -5384,8 +5462,6 @@ var $elm$html$Html$Events$onSubmit = function (msg) {
 			$elm$json$Json$Decode$succeed(msg)));
 };
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Scorekeeper$Main$playerForm = function (model) {
@@ -5437,9 +5513,6 @@ var $author$project$Scorekeeper$Main$Score = F2(
 	function (a, b) {
 		return {$: 'Score', a: a, b: b};
 	});
-var $elm$html$Html$i = _VirtualDom_node('i');
-var $elm$html$Html$li = _VirtualDom_node('li');
-var $elm$core$Debug$toString = _Debug_toString;
 var $author$project$Scorekeeper$Main$playerRow = function (player) {
 	return A2(
 		$elm$html$Html$li,
@@ -5497,7 +5570,6 @@ var $author$project$Scorekeeper$Main$playerRow = function (player) {
 			]));
 };
 var $elm$core$List$sortBy = _List_sortBy;
-var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$Scorekeeper$Main$playerList = function (model) {
 	return A2(
 		$elm$html$Html$ul,
@@ -5512,7 +5584,6 @@ var $author$project$Scorekeeper$Main$playerList = function (model) {
 				},
 				model.players)));
 };
-var $elm$html$Html$header = _VirtualDom_node('header');
 var $author$project$Scorekeeper$Main$playerListHeader = A2(
 	$elm$html$Html$header,
 	_List_Nil,
@@ -5596,6 +5667,7 @@ var $author$project$Scorekeeper$Main$view = function (model) {
 					])),
 				$author$project$Scorekeeper$Main$playerSection(model),
 				$author$project$Scorekeeper$Main$playerForm(model),
+				$author$project$Scorekeeper$Main$playSection(model),
 				A2(
 				$elm$html$Html$p,
 				_List_Nil,
