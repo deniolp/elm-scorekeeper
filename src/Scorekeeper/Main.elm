@@ -164,8 +164,12 @@ playerListHeader =
 
 playerList : Model -> Html Msg
 playerList model =
-    ul []
-        (List.map playerRow model.players)
+    --ul []
+    --    (List.map playerRow model.players)
+    model.players
+        |> List.sortBy .name
+        |> List.map playerRow
+        |> ul []
 
 
 playerRow : Player -> Html Msg

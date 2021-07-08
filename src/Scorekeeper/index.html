@@ -5457,12 +5457,21 @@ var $author$project$Scorekeeper$Main$playerRow = function (player) {
 					]))
 			]));
 };
+var $elm$core$List$sortBy = _List_sortBy;
 var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$Scorekeeper$Main$playerList = function (model) {
 	return A2(
 		$elm$html$Html$ul,
 		_List_Nil,
-		A2($elm$core$List$map, $author$project$Scorekeeper$Main$playerRow, model.players));
+		A2(
+			$elm$core$List$map,
+			$author$project$Scorekeeper$Main$playerRow,
+			A2(
+				$elm$core$List$sortBy,
+				function ($) {
+					return $.name;
+				},
+				model.players)));
 };
 var $elm$html$Html$header = _VirtualDom_node('header');
 var $author$project$Scorekeeper$Main$playerListHeader = A2(
