@@ -5279,6 +5279,14 @@ var $author$project$Scorekeeper$Main$update = F2(
 				var player = msg.a;
 				var points = msg.b;
 				return A3($author$project$Scorekeeper$Main$scorePoints, model, player, points);
+			case 'Edit':
+				var player = msg.a;
+				return _Utils_update(
+					model,
+					{
+						name: player.name,
+						playerId: $elm$core$Maybe$Just(player.id)
+					});
 			default:
 				return model;
 		}

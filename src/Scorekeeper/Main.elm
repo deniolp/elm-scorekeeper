@@ -72,6 +72,9 @@ update msg model =
         Score player points ->
             scorePoints model player points
 
+        Edit player ->
+            { model | name = player.name, playerId = Just player.id }
+
         _ ->
             model
 
