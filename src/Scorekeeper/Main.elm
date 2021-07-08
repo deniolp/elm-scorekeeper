@@ -56,8 +56,7 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         Input name ->
-            Debug.log "Input updated model"
-                { model | name = name }
+            { model | name = name }
 
         Cancel ->
             { model | name = "", playerId = Nothing }
@@ -190,7 +189,6 @@ view model =
         , playerSection model
         , playerForm model
         , playSection model
-        , p [] [ text (toString model) ]
         ]
 
 

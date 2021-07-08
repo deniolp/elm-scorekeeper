@@ -5216,7 +5216,6 @@ var $author$project$Scorekeeper$Main$deletePlay = F2(
 			model,
 			{players: newPlayers, plays: newPlays});
 	});
-var $elm$core$Debug$log = _Debug_log;
 var $author$project$Scorekeeper$Main$Player = F3(
 	function (id, name, points) {
 		return {id: id, name: name, points: points};
@@ -5295,12 +5294,9 @@ var $author$project$Scorekeeper$Main$update = F2(
 		switch (msg.$) {
 			case 'Input':
 				var name = msg.a;
-				return A2(
-					$elm$core$Debug$log,
-					'Input updated model',
-					_Utils_update(
-						model,
-						{name: name}));
+				return _Utils_update(
+					model,
+					{name: name});
 			case 'Cancel':
 				return _Utils_update(
 					model,
@@ -5335,7 +5331,6 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$p = _VirtualDom_node('p');
 var $author$project$Scorekeeper$Main$DeletePlay = function (a) {
 	return {$: 'DeletePlay', a: a};
 };
@@ -5700,15 +5695,7 @@ var $author$project$Scorekeeper$Main$view = function (model) {
 					])),
 				$author$project$Scorekeeper$Main$playerSection(model),
 				$author$project$Scorekeeper$Main$playerForm(model),
-				$author$project$Scorekeeper$Main$playSection(model),
-				A2(
-				$elm$html$Html$p,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text(
-						$elm$core$Debug$toString(model))
-					]))
+				$author$project$Scorekeeper$Main$playSection(model)
 			]));
 };
 var $author$project$Scorekeeper$Main$main = $elm$browser$Browser$sandbox(
