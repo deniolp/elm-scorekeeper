@@ -5184,6 +5184,38 @@ var $elm$browser$Browser$sandbox = function (impl) {
 			view: impl.view
 		});
 };
+var $elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			$elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var $elm$core$Basics$neq = _Utils_notEqual;
+var $author$project$Scorekeeper$Main$deletePlay = F2(
+	function (model, play) {
+		var newPlays = A2(
+			$elm$core$List$filter,
+			function (p) {
+				return !_Utils_eq(p.id, play.id);
+			},
+			model.plays);
+		var newPlayers = A2(
+			$elm$core$List$map,
+			function (player) {
+				return _Utils_eq(player.id, play.playerId) ? _Utils_update(
+					player,
+					{points: player.points - (1 * play.points)}) : player;
+			},
+			model.players);
+		return _Utils_update(
+			model,
+			{players: newPlayers, plays: newPlays});
+	});
 var $elm$core$Debug$log = _Debug_log;
 var $author$project$Scorekeeper$Main$Player = F3(
 	function (id, name, points) {
@@ -5288,7 +5320,8 @@ var $author$project$Scorekeeper$Main$update = F2(
 						playerId: $elm$core$Maybe$Just(player.id)
 					});
 			default:
-				return model;
+				var play = msg.a;
+				return A2($author$project$Scorekeeper$Main$deletePlay, model, play);
 		}
 	});
 var $elm$json$Json$Encode$string = _Json_wrap;
