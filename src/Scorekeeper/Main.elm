@@ -62,8 +62,73 @@ update msg model =
         Cancel ->
             { model | name = "", playerId = Nothing }
 
+        Save ->
+            if String.isEmpty model.name then
+                model
+
+            else
+                save model
+
         _ ->
             model
+
+
+save : Model -> Model
+save model =
+    case model.playerId of
+        Just id ->
+            edit model id
+
+        Nothing ->
+            add model
+
+
+edit : Model -> Int -> Model
+edit model id =
+    let
+        newPlayers =
+            List.map
+                (\player ->
+                    if player.id == id then
+                        { player | name = model.name }
+
+                    else
+                        player
+                )
+                model.players
+
+        newPlays =
+            List.map
+                (\play ->
+                    if play.playerId == id then
+                        { play | name = model.name }
+
+                    else
+                        play
+                )
+                model.plays
+    in
+    { model
+        | players = newPlayers
+        , plays = newPlays
+        , playerId = Nothing
+        , name = ""
+    }
+
+
+add : Model -> Model
+add model =
+    let
+        player =
+            Player (List.length model.players) model.name 0
+
+        newPlayers =
+            player :: model.players
+    in
+    { model
+        | players = newPlayers
+        , name = ""
+    }
 
 
 

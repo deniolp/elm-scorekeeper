@@ -5185,6 +5185,52 @@ var $elm$browser$Browser$sandbox = function (impl) {
 		});
 };
 var $elm$core$Debug$log = _Debug_log;
+var $author$project$Scorekeeper$Main$Player = F3(
+	function (id, name, points) {
+		return {id: id, name: name, points: points};
+	});
+var $author$project$Scorekeeper$Main$add = function (model) {
+	var player = A3(
+		$author$project$Scorekeeper$Main$Player,
+		$elm$core$List$length(model.players),
+		model.name,
+		0);
+	var newPlayers = A2($elm$core$List$cons, player, model.players);
+	return _Utils_update(
+		model,
+		{name: '', players: newPlayers});
+};
+var $author$project$Scorekeeper$Main$edit = F2(
+	function (model, id) {
+		var newPlays = A2(
+			$elm$core$List$map,
+			function (play) {
+				return _Utils_eq(play.playerId, id) ? _Utils_update(
+					play,
+					{name: model.name}) : play;
+			},
+			model.plays);
+		var newPlayers = A2(
+			$elm$core$List$map,
+			function (player) {
+				return _Utils_eq(player.id, id) ? _Utils_update(
+					player,
+					{name: model.name}) : player;
+			},
+			model.players);
+		return _Utils_update(
+			model,
+			{name: '', playerId: $elm$core$Maybe$Nothing, players: newPlayers, plays: newPlays});
+	});
+var $author$project$Scorekeeper$Main$save = function (model) {
+	var _v0 = model.playerId;
+	if (_v0.$ === 'Just') {
+		var id = _v0.a;
+		return A2($author$project$Scorekeeper$Main$edit, model, id);
+	} else {
+		return $author$project$Scorekeeper$Main$add(model);
+	}
+};
 var $author$project$Scorekeeper$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -5200,6 +5246,8 @@ var $author$project$Scorekeeper$Main$update = F2(
 				return _Utils_update(
 					model,
 					{name: '', playerId: $elm$core$Maybe$Nothing});
+			case 'Save':
+				return $elm$core$String$isEmpty(model.name) ? model : $author$project$Scorekeeper$Main$save(model);
 			default:
 				return model;
 		}
