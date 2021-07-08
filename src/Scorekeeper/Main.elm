@@ -1,6 +1,7 @@
 module Scorekeeper.Main exposing (..)
 
 import Browser
+import Debug exposing (toString)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -58,6 +59,9 @@ update msg model =
             Debug.log "Input updated model"
                 { model | name = name }
 
+        Cancel ->
+            { model | name = "", playerId = Nothing }
+
         _ ->
             model
 
@@ -71,6 +75,7 @@ view model =
     div [ class "scoreboard" ]
         [ h1 [] [ text "Score Keeper" ]
         , playerForm model
+        , p [] [ text (toString model) ]
         ]
 
 

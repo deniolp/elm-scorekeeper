@@ -5187,16 +5187,21 @@ var $elm$browser$Browser$sandbox = function (impl) {
 var $elm$core$Debug$log = _Debug_log;
 var $author$project$Scorekeeper$Main$update = F2(
 	function (msg, model) {
-		if (msg.$ === 'Input') {
-			var name = msg.a;
-			return A2(
-				$elm$core$Debug$log,
-				'Hi',
-				_Utils_update(
+		switch (msg.$) {
+			case 'Input':
+				var name = msg.a;
+				return A2(
+					$elm$core$Debug$log,
+					'Input updated model',
+					_Utils_update(
+						model,
+						{name: name}));
+			case 'Cancel':
+				return _Utils_update(
 					model,
-					{name: name}));
-		} else {
-			return model;
+					{name: '', playerId: $elm$core$Maybe$Nothing});
+			default:
+				return model;
 		}
 	});
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -5210,6 +5215,7 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $author$project$Scorekeeper$Main$Cancel = {$: 'Cancel'};
 var $author$project$Scorekeeper$Main$Input = function (a) {
 	return {$: 'Input', a: a};
@@ -5337,6 +5343,7 @@ var $author$project$Scorekeeper$Main$playerForm = function (model) {
 					]))
 			]));
 };
+var $elm$core$Debug$toString = _Debug_toString;
 var $author$project$Scorekeeper$Main$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
@@ -5353,7 +5360,15 @@ var $author$project$Scorekeeper$Main$view = function (model) {
 					[
 						$elm$html$Html$text('Score Keeper')
 					])),
-				$author$project$Scorekeeper$Main$playerForm(model)
+				$author$project$Scorekeeper$Main$playerForm(model),
+				A2(
+				$elm$html$Html$p,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$elm$core$Debug$toString(model))
+					]))
 			]));
 };
 var $author$project$Scorekeeper$Main$main = $elm$browser$Browser$sandbox(
