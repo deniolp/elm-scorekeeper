@@ -5231,6 +5231,33 @@ var $author$project$Scorekeeper$Main$save = function (model) {
 		return $author$project$Scorekeeper$Main$add(model);
 	}
 };
+var $author$project$Scorekeeper$Main$Play = F4(
+	function (id, playerId, name, points) {
+		return {id: id, name: name, playerId: playerId, points: points};
+	});
+var $author$project$Scorekeeper$Main$scorePoints = F3(
+	function (model, scorer, points) {
+		var play = A4(
+			$author$project$Scorekeeper$Main$Play,
+			$elm$core$List$length(model.plays),
+			scorer.id,
+			scorer.name,
+			points);
+		var newPlayers = A2(
+			$elm$core$List$map,
+			function (item) {
+				return _Utils_eq(item.id, scorer.id) ? _Utils_update(
+					item,
+					{points: item.points + points}) : item;
+			},
+			model.players);
+		return _Utils_update(
+			model,
+			{
+				players: newPlayers,
+				plays: A2($elm$core$List$cons, play, model.plays)
+			});
+	});
 var $author$project$Scorekeeper$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -5248,6 +5275,10 @@ var $author$project$Scorekeeper$Main$update = F2(
 					{name: '', playerId: $elm$core$Maybe$Nothing});
 			case 'Save':
 				return $elm$core$String$isEmpty(model.name) ? model : $author$project$Scorekeeper$Main$save(model);
+			case 'Score':
+				var player = msg.a;
+				var points = msg.b;
+				return A3($author$project$Scorekeeper$Main$scorePoints, model, player, points);
 			default:
 				return model;
 		}

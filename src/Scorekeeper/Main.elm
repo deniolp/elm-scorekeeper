@@ -69,8 +69,33 @@ update msg model =
             else
                 save model
 
+        Score player points ->
+            scorePoints model player points
+
         _ ->
             model
+
+
+scorePoints : Model -> Player -> Int -> Model
+scorePoints model scorer points =
+    let
+        newPlayers =
+            List.map
+                (\item ->
+                    if item.id == scorer.id then
+                        { item
+                            | points = item.points + points
+                        }
+
+                    else
+                        item
+                )
+                model.players
+
+        play =
+            Play (List.length model.plays) scorer.id scorer.name points
+    in
+    { model | players = newPlayers, plays = play :: model.plays }
 
 
 save : Model -> Model
