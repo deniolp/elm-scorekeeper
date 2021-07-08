@@ -5190,12 +5190,12 @@ var $author$project$Scorekeeper$Main$Player = F3(
 		return {id: id, name: name, points: points};
 	});
 var $author$project$Scorekeeper$Main$add = function (model) {
-	var player = A3(
+	var somePlayer = A3(
 		$author$project$Scorekeeper$Main$Player,
 		$elm$core$List$length(model.players),
 		model.name,
 		0);
-	var newPlayers = A2($elm$core$List$cons, player, model.players);
+	var newPlayers = A2($elm$core$List$cons, somePlayer, model.players);
 	return _Utils_update(
 		model,
 		{name: '', players: newPlayers});
@@ -5212,10 +5212,10 @@ var $author$project$Scorekeeper$Main$edit = F2(
 			model.plays);
 		var newPlayers = A2(
 			$elm$core$List$map,
-			function (player) {
-				return _Utils_eq(player.id, id) ? _Utils_update(
-					player,
-					{name: model.name}) : player;
+			function (it) {
+				return _Utils_eq(it.id, id) ? _Utils_update(
+					it,
+					{name: model.name}) : it;
 			},
 			model.players);
 		return _Utils_update(
@@ -5391,7 +5391,145 @@ var $author$project$Scorekeeper$Main$playerForm = function (model) {
 					]))
 			]));
 };
+var $author$project$Scorekeeper$Main$Edit = function (a) {
+	return {$: 'Edit', a: a};
+};
+var $author$project$Scorekeeper$Main$Score = F2(
+	function (a, b) {
+		return {$: 'Score', a: a, b: b};
+	});
+var $elm$html$Html$i = _VirtualDom_node('i');
+var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$core$Debug$toString = _Debug_toString;
+var $author$project$Scorekeeper$Main$playerRow = function (player) {
+	return A2(
+		$elm$html$Html$li,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$i,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('edit'),
+						$elm$html$Html$Events$onClick(
+						$author$project$Scorekeeper$Main$Edit(player))
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(player.name)
+					])),
+				A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$type_('button'),
+						$elm$html$Html$Events$onClick(
+						A2($author$project$Scorekeeper$Main$Score, player, 2))
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('2pt')
+					])),
+				A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$type_('button'),
+						$elm$html$Html$Events$onClick(
+						A2($author$project$Scorekeeper$Main$Score, player, 3))
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('3pt')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$elm$core$Debug$toString(player.points))
+					]))
+			]));
+};
+var $elm$html$Html$ul = _VirtualDom_node('ul');
+var $author$project$Scorekeeper$Main$playerList = function (model) {
+	return A2(
+		$elm$html$Html$ul,
+		_List_Nil,
+		A2($elm$core$List$map, $author$project$Scorekeeper$Main$playerRow, model.players));
+};
+var $elm$html$Html$header = _VirtualDom_node('header');
+var $author$project$Scorekeeper$Main$playerListHeader = A2(
+	$elm$html$Html$header,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Name')
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Points')
+				]))
+		]));
+var $elm$html$Html$footer = _VirtualDom_node('footer');
+var $elm$core$List$sum = function (numbers) {
+	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
+};
+var $author$project$Scorekeeper$Main$pointsTotal = function (model) {
+	var total = $elm$core$List$sum(
+		A2(
+			$elm$core$List$map,
+			function ($) {
+				return $.points;
+			},
+			model.plays));
+	return A2(
+		$elm$html$Html$footer,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Total:')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$elm$core$Debug$toString(total))
+					]))
+			]));
+};
+var $author$project$Scorekeeper$Main$playerSection = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$author$project$Scorekeeper$Main$playerListHeader,
+				$author$project$Scorekeeper$Main$playerList(model),
+				$author$project$Scorekeeper$Main$pointsTotal(model)
+			]));
+};
 var $author$project$Scorekeeper$Main$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
@@ -5408,6 +5546,7 @@ var $author$project$Scorekeeper$Main$view = function (model) {
 					[
 						$elm$html$Html$text('Score Keeper')
 					])),
+				$author$project$Scorekeeper$Main$playerSection(model),
 				$author$project$Scorekeeper$Main$playerForm(model),
 				A2(
 				$elm$html$Html$p,
