@@ -45,17 +45,17 @@ update msg model =
             }
 
         Input val ->
-            case val |> String.toInt of
-                Just input ->
+            case Result.fromMaybe ("Error while converting to Int: " ++ val) (String.toInt val) of
+                Ok input ->
                     { model
                         | input = input
                         , error = Nothing
                     }
 
-                Nothing ->
+                Err err ->
                     { model
                         | input = 0
-                        , error = Just (toString "Something in input is wrong")
+                        , error = Just err
                     }
 
         Clear ->
