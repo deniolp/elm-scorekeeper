@@ -253,19 +253,19 @@ playerList model =
     --    (List.map playerRow model.players)
     model.players
         |> List.sortBy .name
-        |> List.map playerRow
+        |> List.map (playerRow model.playerId)
         |> ul []
 
 
-playerRow : Player -> Html Msg
-playerRow player =
+playerRow : Maybe Int -> Player -> Html Msg
+playerRow editPlayerId player =
     li []
         [ i
             [ class "edit"
             , onClick (Edit player)
             ]
             []
-        , div [] [ text player.name ]
+        , div [ class (editPlayerClass editPlayerId player) ] [ text player.name ]
         , button
             [ type_ "button"
             , onClick (Score player 2)
@@ -303,11 +303,36 @@ playerForm model =
             , placeholder "Add/Edit Player..."
             , onInput Input
             , value model.name
+            , class (editInputClass model.playerId)
             ]
             []
         , button [ type_ "submit" ] [ text "Save" ]
         , button [ type_ "button", onClick Cancel ] [ text "Cancel" ]
         ]
+
+
+editInputClass : Maybe Int -> String
+editInputClass editPlayerId =
+    case editPlayerId of
+        Just id ->
+            "edit"
+
+        Nothing ->
+            ""
+
+
+editPlayerClass : Maybe Int -> Player -> String
+editPlayerClass editPlayerId player =
+    case editPlayerId of
+        Just id ->
+            if player.id == id then
+                "edit"
+
+            else
+                ""
+
+        Nothing ->
+            ""
 
 
 main =
