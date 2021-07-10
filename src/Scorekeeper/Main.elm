@@ -314,7 +314,7 @@ playerForm model =
 editInputClass : Maybe Int -> String
 editInputClass editPlayerId =
     case editPlayerId of
-        Just id ->
+        Just _ ->
             "edit"
 
         Nothing ->
@@ -335,5 +335,6 @@ editPlayerClass editPlayerId player =
             ""
 
 
+main : Program () Model Msg
 main =
     Browser.sandbox { init = initModel, update = update, view = view }
