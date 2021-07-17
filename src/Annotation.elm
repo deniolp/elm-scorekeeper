@@ -4,6 +4,7 @@ import Debug exposing (toString)
 import Html
 
 
+main : Html.Html msg
 main =
     hypotenuse 8 7
         |> toString

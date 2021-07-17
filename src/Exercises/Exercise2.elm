@@ -4,6 +4,7 @@ import Debug exposing (toString)
 import Html exposing (text)
 
 
+main : Html.Html msg
 main =
     "Here is a test sentence"
         |> wordCount
@@ -11,5 +12,6 @@ main =
         |> text
 
 
+wordCount : String -> Int
 wordCount =
     String.words >> List.length

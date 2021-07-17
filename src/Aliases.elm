@@ -4,6 +4,7 @@ import Debug exposing (toString)
 import Html
 
 
+main : Html.Html msg
 main =
     isOldEnoughToVote { name = "Bob", age = 15 }
         |> toString
